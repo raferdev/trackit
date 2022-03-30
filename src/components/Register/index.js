@@ -2,17 +2,21 @@ import logo from "../../assets/img/logo.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from "axios";
-export default function Login() {
-    const LOGIN_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`
-
-    function submitLogin() {
-        const dados = {
-            email: "batatinha123@gmail.com",
-            password: "senhadobatata"
-        }
-        const promise = axios.post(LOGIN_API,dados);
-        promise.then(response =>
-            console.log(response.data));
+export default function Register() {
+    const REGISTER_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`
+    function submitRegister() {
+        const dados = 
+            {
+                email: "batatinha123@gmail.com",
+                name: "Sr.batata",
+                image: "https://hiperideal.vteximg.com.br/arquivos/ids/167660-1000-1000/27502.jpg?v=636615816147030000",
+                password: "senhadobatata"
+            }
+        
+        const promise = axios.post(REGISTER_API,dados);
+        promise.then(response => 
+            console.log(response.data)
+        )
         promise.catch(response =>
             console.log(response))
     }
@@ -20,11 +24,13 @@ export default function Login() {
     <Main>
       <Img src={logo}></Img>
       <Section>
-        <Input type="text" placeholder="email"></Input>
-        <Input type="password" placeholder="senha"></Input>
-        <Button onClick={submitLogin}>Entrar</Button>
+        <Input placeholder="email"></Input>
+        <Input placeholder="senha"></Input>
+        <Input placeholder="nome"></Input>
+        <Input placeholder="foto"></Input>
+        <Button onClick={submitRegister}>Cadastrar</Button>
         <RegisterDiv>
-        <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+        <Link to="/login">Já tem uma conta? Faça login!</Link>
         </RegisterDiv>
       </Section>
     </Main>
