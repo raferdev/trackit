@@ -1,10 +1,16 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { LoginContext } from "../../../../assets/context/LoginContext";
-export default function Create() {
+import Selectors from "./selectors";
+export default function Create(props) {
+  const {setCreate} = props;
   const {userData} = useContext(LoginContext);
-  function Post() {
+  const [days, setDays] = useState([]);
+  const [habit, setHabit] = useState("");
+  const daysSelectors = ["D","S","T","Q","Q","S","S"];
+  function Post(event) {
+    event.preventDefault();
     const CREATE_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`
     const config = {
       headers: {
@@ -12,31 +18,38 @@ export default function Create() {
       }
     }
     const body = {
-      name: "Nome do hábito",
-      days: [1, 3, 5]
+      name: habit,
+      days: days
     }
-    const promise = axios.post(CREATE_API,body,config);
+    console.log(body)
+    setCreate(false)
+  /*   const promise = axios.post(CREATE_API,body,config);
     promise.then(response =>{
-      console.log(response.data)
-    })
+      console.log(response.data) */
+    
   }
     return (
         <SectionCreate>
           <Div>
-            <Input placeholder="nome do hábito"></Input>
+            <form onSubmit={Post}>
+            <Input placeholder="nome do hábito"
+            value={habit}
+            onChange={(e) => setHabit(e.target.value)}></Input>
             <ButtonsWeek>
-              <ButtonWeek>D</ButtonWeek>
-              <ButtonWeek>S</ButtonWeek>
-              <ButtonWeek>T</ButtonWeek>
-              <ButtonWeek>Q</ButtonWeek>
-              <ButtonWeek>Q</ButtonWeek>
-              <ButtonWeek>S</ButtonWeek>
-              <ButtonWeek>S</ButtonWeek>
+            {daysSelectors.map((name,index) => {
+              return (
+            <Selectors
+            id={index}
+            name={name}
+            key={index}
+            setDays={setDays}
+            />)})}
             </ButtonsWeek>
             <NavButtons>
               <ButtonQuit>Cancelar</ButtonQuit>
-              <ButtonSave onClick={Post}>Salvar</ButtonSave>
+              <ButtonSave type="submit">Salvar</ButtonSave>
             </NavButtons>
+            </form>
           </Div>
         </SectionCreate>
     )
@@ -57,7 +70,7 @@ const Input = styled.input`
   height: 45px;
   left: 36px;
   top: 165px;
-  background: #ffffff;
+  background-color: ${props => props.background};
   border: 1px solid #d5d5d5;
   box-sizing: border-box;
   border-radius: 5px;
@@ -66,7 +79,7 @@ const Input = styled.input`
   font-weight: 400;
   font-size: 19.976px;
   line-height: 25px;
-  color: #dbdbdb;
+  color: ${props => props.color};;
   margin-bottom: 8px;
   &:focus {
     color: #666666;
@@ -76,26 +89,6 @@ const Input = styled.input`
 const Div = styled.section``;
 const ButtonsWeek = styled.div`
   display: flex;
-`;
-const ButtonWeek = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 2px;
-  width: 30px;
-  height: 30px;
-  left: 36px;
-  top: 218px;
-  background-color: #ffffff;
-  border: 1px solid #d5d5d5;
-  box-sizing: border-box;
-  border-radius: 5px;
-  font-family: "Lexend Deca";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 19.976px;
-  line-height: 25px;
-  color: #dbdbdb;
 `;
 const NavButtons = styled.div`
   margin-top: 30px;

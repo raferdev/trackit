@@ -2,21 +2,22 @@ import Header from "../Header";
 import styled from "styled-components";
 import Create from "./Create";
 import Footer from "../Footer";
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import {LoginContext} from "../../../assets/context/LoginContext.js"
 export default function Habitos() {
-  const {userData} = useContext(LoginContext)
+  const {userData} = useContext(LoginContext);
+  const [create,setCreate] = useState(false);
   return (
     <>
       <Header />
       <Main>
         <Section>
           <H2>Meus hábitos</H2>
-          <Button>
+          <Button onClick={()=>setCreate(true)}>
             <p>+</p>
           </Button>
         </Section>
-        <Create/>
+        {create?<Create setCreate={setCreate}/>:<></>}
         <Article>
           <Empty>
             <p>

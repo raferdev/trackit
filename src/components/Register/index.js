@@ -2,11 +2,13 @@ import logo from "../../assets/img/logo.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 export default function Register() {
   const REGISTER_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`;
   const [submit, setSubmit] = useState(false);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
@@ -22,7 +24,9 @@ export default function Register() {
     };
 
     const promise = axios.post(REGISTER_API, dados);
-    promise.then((response) => console.log(response.data));
+    promise.then((response) => {
+      navigate("/login")
+    });
     promise.catch((response) => console.log(response));
   }
   return (
@@ -105,6 +109,9 @@ const Button = styled.button`
   width: 100%;
   background: #52b6ff;
   border-radius: 4.63636px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 `;
 const RegisterDiv = styled.div`
   height: 65px;
