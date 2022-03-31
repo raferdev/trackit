@@ -2,28 +2,68 @@ import logo from "../../assets/img/logo.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
+import { useContext, useState } from "react";
+import { LoginContext } from "../../assets/context/LoginContext";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
-    const LOGIN_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`
-    function submitLogin() {
-        const dados = {
-            email: "batatinha123@gmail.com",
-            password: "senhadobatata"
-        }
-        const promise = axios.post(LOGIN_API,dados);
-        promise.then(response =>
-            console.log(response.data));
-        promise.catch(response =>
-            console.log(response))
-    }
+  const LOGIN_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`;
+  const navigate = useNavigate();
+  const { setUserData } = useContext(LoginContext);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [submit, setSubmit] = useState(false);
+  function submitLogin(event) {
+    event.preventDefault();
+    setSubmit(true);
+    const dados = {
+      email: email,
+      password: password,
+    };
+    const promise = axios.post(LOGIN_API, dados);
+    promise.then((response) => {
+      const data = response.data;
+      const userLogin = {
+        email: data.email,
+        id: data.id,
+        image: data.image,
+        name: data.name,
+        token: data.token,
+      };
+      setUserData(userLogin);
+      navigate("/habitos");
+    });
+    promise.catch((response) => console.log(response));
+  }
   return (
     <Main>
       <Img src={logo}></Img>
       <Section>
-        <Input type="text" placeholder="email"></Input>
-        <Input type="password" placeholder="senha"></Input>
-        <Button onClick={submitLogin}>Entrar</Button>
+        <form onSubmit={submitLogin}>
+          <Input
+            type="text"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required disabled={(submit)?true:false}
+          ></Input>
+          <Input
+            type="password"
+            placeholder="senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required disabled={(submit)?true:false}
+          ></Input>
+          <Button type="submit" opacity={submit?0.7:1}>
+            {submit ? (
+              <ThreeDots color="#FFFFFF" height={80} width={80} />
+            ) : (
+              "Entrar"
+            )}
+          </Button>
+        </form>
         <RegisterDiv>
-        <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+          <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
         </RegisterDiv>
       </Section>
     </Main>
@@ -51,18 +91,22 @@ const Input = styled.input`
   margin-bottom: 6px;
   border: 1px solid #d5d5d5;
   border-radius: 5px;
-
+  padding-left:10px;
 `;
 const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 45px;
   width: 100%;
   background: #52b6ff;
+  opacity: ${props => props.opacity};
   border-radius: 4.63636px;
 `;
 const RegisterDiv = styled.div`
-    height: 65px;
-    width: 100%;
-    display:flex;
-    justify-content: center;
-    align-items:center;
-`
+  height: 65px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
