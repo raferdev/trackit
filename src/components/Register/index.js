@@ -1,36 +1,77 @@
 import logo from "../../assets/img/logo.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
+import { useState } from "react";
 import axios from "axios";
 export default function Register() {
-    const REGISTER_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`
-    function submitRegister() {
-        const dados = 
-            {
-                email: "batatinha123@gmail.com",
-                name: "Sr.batata",
-                image: "https://hiperideal.vteximg.com.br/arquivos/ids/167660-1000-1000/27502.jpg?v=636615816147030000",
-                password: "senhadobatata"
-            }
-        
-        const promise = axios.post(REGISTER_API,dados);
-        promise.then(response => 
-            console.log(response.data)
-        )
-        promise.catch(response =>
-            console.log(response))
-    }
+  const REGISTER_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`;
+  const [submit, setSubmit] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const [password, setPassword] = useState("");
+  function submitRegister(event) {
+    event.preventDefault();
+    setSubmit(true);
+    const dados = {
+      email: email,
+      name: name,
+      image: image,
+      password: password,
+    };
+
+    const promise = axios.post(REGISTER_API, dados);
+    promise.then((response) => console.log(response.data));
+    promise.catch((response) => console.log(response));
+  }
   return (
     <Main>
       <Img src={logo}></Img>
       <Section>
-        <Input placeholder="email"></Input>
-        <Input placeholder="senha"></Input>
-        <Input placeholder="nome"></Input>
-        <Input placeholder="foto"></Input>
-        <Button onClick={submitRegister}>Cadastrar</Button>
+        <form onSubmit={submitRegister}>
+          <Input
+            type="text"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={submit ? true : false}
+          ></Input>
+          <Input
+            type="password"
+            placeholder="senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            disabled={submit ? true : false}
+          ></Input>
+          <Input
+            type="text"
+            placeholder="nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            disabled={submit ? true : false}
+          ></Input>
+          <Input
+            type="text"
+            placeholder="foto"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            required
+            disabled={submit ? true : false}
+          ></Input>
+          <Button type="submit" opacity={submit ? 0.7 : 1}>
+            {submit ? (
+              <ThreeDots color="#FFFFFF" height={80} width={80} />
+            ) : (
+              "Cadastrar"
+            )}
+          </Button>
+        </form>
         <RegisterDiv>
-        <Link to="/login">Já tem uma conta? Faça login!</Link>
+          <Link to="/login">Já tem uma conta? Faça login!</Link>
         </RegisterDiv>
       </Section>
     </Main>
@@ -58,7 +99,6 @@ const Input = styled.input`
   margin-bottom: 6px;
   border: 1px solid #d5d5d5;
   border-radius: 5px;
-
 `;
 const Button = styled.button`
   height: 45px;
@@ -67,9 +107,9 @@ const Button = styled.button`
   border-radius: 4.63636px;
 `;
 const RegisterDiv = styled.div`
-    height: 65px;
-    width: 100%;
-    display:flex;
-    justify-content: center;
-    align-items:center;
-`
+  height: 65px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
