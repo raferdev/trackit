@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 export default function Login() {
     const LOGIN_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`
-
     function submitLogin() {
         const dados = {
             email: "batatinha123@gmail.com",
