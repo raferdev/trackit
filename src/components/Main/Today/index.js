@@ -7,37 +7,8 @@ import { useEffect, useState, useContext } from "react";
 import { ReactComponent as ReactLogo } from "../../../assets/img/checkbox.svg";
 export default function Hoje() {
   const { userData } = useContext(LoginContext);
-  const [todayHabits, setTodayHabits] = useState([
-    {
-      id: 3,
-      name: "Acordar",
-      done: true,
-      currentSequence: 1,
-      highestSequence: 1,
-    },
-    {
-      id: 4,
-      name: "ldsdas",
-      done: false,
-      currentSequence: 4,
-      highestSequence: 4,
-    },
-    {
-      id: 4,
-      name: "ldsdas",
-      done: false,
-      currentSequence: 4,
-      highestSequence: 6,
-    },
-    {
-      id: 4,
-      name: "ldsdas",
-      done: false,
-      currentSequence: 1,
-      highestSequence: 1,
-    },
-  ]);
-  /* useEffect(() => {
+  const [todayHabits, setTodayHabits] = useState([]);
+  useEffect(() => {
     const TODAY_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
     const config = {
       headers: {
@@ -46,7 +17,7 @@ export default function Hoje() {
     };
     const promise = axios.get(TODAY_API, config);
     promise.then((response) => setTodayHabits(response.data));
-  }, []); */
+  }, []);
   return (
     <>
       <Header />
@@ -54,8 +25,8 @@ export default function Hoje() {
         {todayHabits.map((habit, index) => {
           const curDays = habit.currentSequence;
           const higDays = habit.highestSequence;
-          const seqAtual = curDays > 1 ? `${curDays} dias` : `${curDays} dia`;
-          const record = higDays > 1 ? `${higDays} dias` : `${higDays} dia`;
+          const seqAtual = curDays > 1 || curDays==0 ? `${curDays} dias` : `${curDays} dia`;
+          const record = higDays > 1 || higDays==0 ? `${higDays} dias` : `${higDays} dia`;
           return (
             <HeaderDiv key={index} fill={habit.done ? "#8FC549" : "#EBEBEB"}>
               <TextDiv>
@@ -68,7 +39,7 @@ export default function Hoje() {
                 </H3>
                 <H3>
                   Seu recorde: 
-                  <Strong color={curDays >= higDays ? "#8FC549" : "#666666;"}>
+                  <Strong color={curDays >= higDays && curDays!=0 ? "#8FC549" : "#666666;"}>
                     {record}
                   </Strong>
                 </H3>
