@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components"
 export default function Selectors(props) {
-    const {id,name,setDays} = props;
+    const {id,name,setDays, submit} = props;
     const [select, setSelect] = useState(false);
     function postCreate() {
         setSelect(select?false:true)
@@ -17,7 +17,7 @@ export default function Selectors(props) {
         })
       }
     return (
-    <ButtonWeek type="button" background={select?"#CFCFCF;":"#ffffff"} color={select?"#ffffff":"#dbdbdb"} onClick={postCreate}>{name}</ButtonWeek>
+    <ButtonWeek type="button" opacity={submit ? 0.7 : 1} background={select?"#CFCFCF;":"#ffffff"} color={select?"#ffffff":"#dbdbdb"} onClick={postCreate} disabled={submit ? true : false}>{name}</ButtonWeek>
     )
 }
 const ButtonWeek = styled.button`

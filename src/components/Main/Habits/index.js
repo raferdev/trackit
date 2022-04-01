@@ -2,29 +2,110 @@ import Header from "../Header";
 import styled from "styled-components";
 import Create from "./Create";
 import Footer from "../Footer";
-import { useContext, useState } from "react"
-import {LoginContext} from "../../../assets/context/LoginContext.js"
+import trashImg from "../../../assets/img/trash.jpg";
+import { useContext, useState, useEffect } from "react";
+import { LoginContext } from "../../../assets/context/LoginContext.js";
+import axios from "axios";
 export default function Habitos() {
-  const {userData} = useContext(LoginContext);
-  const [create,setCreate] = useState(false);
+  const { userData } = useContext(LoginContext);
+  const [create, setCreate] = useState(false);
+  const [habits, setHabits] = useState([
+    {
+      id: 1,
+      name: "Nome do hábito",
+      days: [1, 3, 5],
+    },
+    {
+      id: 2,
+      name: "Nome do hábito 2",
+      days: [1, 3, 4, 6],
+    },
+  ]);
+  useEffect(() => {
+    const RELOAD_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
+    const promise = axios.get(RELOAD_API,config);
+    promise.then(response => (
+      setHabits(response.data)
+    ));
+    },[])
   return (
     <>
       <Header />
       <Main>
         <Section>
           <H2>Meus hábitos</H2>
-          <Button onClick={()=>setCreate(true)}>
+          <Button onClick={() => setCreate(true)}>
             <p>+</p>
           </Button>
         </Section>
-        {create?<Create setCreate={setCreate}/>:<></>}
+        {create ? <Create setCreate={setCreate} /> : <></>}
         <Article>
-          <Empty>
-            <p>
-              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
-              para começar a trackear!
-            </p>
-          </Empty>
+          {habits.length > 0 ? (
+            habits.map((habit, index) => (
+              <HabitDiv key={index}>
+                <HabitHead>
+                  <H3>{habit.name}</H3>
+                  <img src={trashImg}></img>
+                </HabitHead>
+                <DivWeek>
+                  <Week
+                    background={habit.days.includes(0) ? "#CFCFCF" : "#FFFFFF"}
+                    color={habit.days.includes(0) ? "#FFFFFF" : "#DBDBDB"}
+                  >
+                    D
+                  </Week>
+                  <Week
+                    background={habit.days.includes(1) ? "#CFCFCF" : "#FFFFFF"}
+                    color={habit.days.includes(1) ? "#FFFFFF" : "#DBDBDB"}
+                  >
+                    S
+                  </Week>
+                  <Week
+                    background={habit.days.includes(2) ? "#CFCFCF" : "#FFFFFF"}
+                    color={habit.days.includes(2) ? "#FFFFFF" : "#DBDBDB"}
+                  >
+                    T
+                  </Week>
+                  <Week
+                    background={habit.days.includes(3) ? "#CFCFCF" : "#FFFFFF"}
+                    color={habit.days.includes(3) ? "#FFFFFF" : "#DBDBDB"}
+                  >
+                    Q
+                  </Week>
+                  <Week
+                    background={habit.days.includes(4) ? "#CFCFCF" : "#FFFFFF"}
+                    color={habit.days.includes(4) ? "#FFFFFF" : "#DBDBDB"}
+                  >
+                    Q
+                  </Week>
+                  <Week
+                    background={habit.days.includes(5) ? "#CFCFCF" : "#FFFFFF"}
+                    color={habit.days.includes(5) ? "#FFFFFF" : "#DBDBDB"}
+                  >
+                    S
+                  </Week>
+                  <Week
+                    background={habit.days.includes(6) ? "#CFCFCF" : "#FFFFFF"}
+                    color={habit.days.includes(6) ? "#FFFFFF" : "#DBDBDB"}
+                  >
+                    S
+                  </Week>
+                </DivWeek>
+              </HabitDiv>
+            ))
+          ) : (
+            <Empty>
+              <p>
+                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
+                para começar a trackear!
+              </p>
+            </Empty>
+          )}
         </Article>
       </Main>
       <Footer />
@@ -78,6 +159,50 @@ const Article = styled.article`
 `;
 const Empty = styled.div`
   display: flex;
-  height:100px;
-
+  height: 100px;
+`;
+const HabitDiv = styled.div`
+  width: 340px;
+  height: 91px;
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 15px 11px 15px 15px;
+  margin-bottom: 10px;
+`;
+const DivWeek = styled.div`
+  display: flex;
+`;
+const Week = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2px;
+  width: 30px;
+  height: 30px;
+  left: 36px;
+  top: 218px;
+  background-color: ${(props) => props.background};
+  border: 1px solid #d5d5d5;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.976px;
+  line-height: 25px;
+  color: ${(props) => props.color};
+`;
+const HabitHead = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+`;
+const H3 = styled.h3`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.976px;
+  line-height: 25px;
+  color: #666666;
 `;

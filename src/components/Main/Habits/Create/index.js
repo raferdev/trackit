@@ -3,56 +3,81 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { LoginContext } from "../../../../assets/context/LoginContext";
 import Selectors from "./selectors";
+import { ThreeDots } from "react-loader-spinner";
 export default function Create(props) {
-  const {setCreate} = props;
-  const {userData} = useContext(LoginContext);
+  const { setCreate } = props;
+  const { userData } = useContext(LoginContext);
   const [days, setDays] = useState([]);
   const [habit, setHabit] = useState("");
-  const daysSelectors = ["D","S","T","Q","Q","S","S"];
+  const [submit, setSubmit] = useState(false);
+  const daysSelectors = ["D", "S", "T", "Q", "Q", "S", "S"];
   function Post(event) {
     event.preventDefault();
-    const CREATE_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`
+    setSubmit(true);
+    const CREATE_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
     const config = {
       headers: {
-        "Authorization": `Bearer ${userData.token}`
-      }
-    }
+        Authorization: `Bearer ${userData.token}`,
+      },
+    };
     const body = {
       name: habit,
-      days: days
-    }
-    console.log(body)
-    setCreate(false)
-  /*   const promise = axios.post(CREATE_API,body,config);
-    promise.then(response =>{
-      console.log(response.data) */
-    
+      days: days,
+    };
+    const promise = axios.post(CREATE_API, body, config);
+    promise.then((response) => {
+      setCreate(false);
+      console.log(response.data);
+    });
   }
-    return (
-        <SectionCreate>
-          <Div>
-            <form onSubmit={Post}>
-            <Input placeholder="nome do hábito"
+  return (
+    <SectionCreate>
+      <Div>
+        <form onSubmit={Post}>
+          <Input
+            placeholder="nome do hábito"
             value={habit}
-            onChange={(e) => setHabit(e.target.value)}></Input>
-            <ButtonsWeek>
-            {daysSelectors.map((name,index) => {
+            onChange={(e) => setHabit(e.target.value)}
+            disabled={submit ? true : false}
+          ></Input>
+          <ButtonsWeek>
+            {daysSelectors.map((name, index) => {
               return (
-            <Selectors
-            id={index}
-            name={name}
-            key={index}
-            setDays={setDays}
-            />)})}
-            </ButtonsWeek>
-            <NavButtons>
-              <ButtonQuit>Cancelar</ButtonQuit>
-              <ButtonSave type="submit">Salvar</ButtonSave>
-            </NavButtons>
-            </form>
-          </Div>
-        </SectionCreate>
-    )
+                <Selectors
+                  id={index}
+                  name={name}
+                  key={index}
+                  submit={submit}
+                  setDays={setDays}
+                />
+              );
+            })}
+          </ButtonsWeek>
+          <NavButtons>
+            <ButtonQuit
+              type="button"
+              opacity={submit ? 0.7 : 1}
+              onClick={() => setCreate(false)}
+              disabled={submit ? true : false}
+            >
+              Cancelar
+            </ButtonQuit>
+            <ButtonSave
+              type="submit"
+              opacity={submit ? 0.7 : 1}
+              disabled={submit ? true : false}
+            >
+              {submit ? (
+                <ThreeDots color="#FFFFFF" height={30} width={30} />
+              ) : (
+                "Salvar"
+              )}
+            </ButtonSave>
+          </NavButtons>
+        </form>
+      </Div>
+    </SectionCreate>
+  );
 }
 const SectionCreate = styled.div`
   display: flex;
@@ -70,7 +95,7 @@ const Input = styled.input`
   height: 45px;
   left: 36px;
   top: 165px;
-  background-color: ${props => props.background};
+  background-color: ${(props) => props.background};
   border: 1px solid #d5d5d5;
   box-sizing: border-box;
   border-radius: 5px;
@@ -79,7 +104,7 @@ const Input = styled.input`
   font-weight: 400;
   font-size: 19.976px;
   line-height: 25px;
-  color: ${props => props.color};;
+  color: ${(props) => props.color};
   margin-bottom: 8px;
   &:focus {
     color: #666666;
@@ -109,6 +134,7 @@ const ButtonSave = styled.button`
   font-size: 15.976px;
   line-height: 20px;
   color: #ffffff;
+  opacity: ${(props) => props.opacity};
   outline: none;
   border: none;
 `;
@@ -124,6 +150,7 @@ const ButtonQuit = styled.button`
   font-weight: 400;
   font-size: 15.976px;
   line-height: 20px;
+  opacity: ${(props) => props.opacity};
   color: #52b6ff;
   outline: none;
   border: none;

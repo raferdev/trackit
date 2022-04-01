@@ -54,7 +54,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required disabled={(submit)?true:false}
           ></Input>
-          <Button type="submit" opacity={submit?0.7:1}>
+          <Button type="submit" opacity={submit?0.7:1} disabled={(submit)?true:false}>
             {submit ? (
               <ThreeDots color="#FFFFFF" height={80} width={80} />
             ) : (
