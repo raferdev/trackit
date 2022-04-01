@@ -1,12 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 export default function Footer() {
+  const navigate = useNavigate();
+  function goTo(to) {
+    navigate(to)
+  }
   return (
     <FooterStyle>
-      <H3>Hábitos</H3>
-      <Hoje>
+      <H3 onClick={()=>goTo("/habitos")}>Hábitos</H3>
+      <Hoje onClick={()=>goTo("/hoje")}>
         <p>Hoje</p>
       </Hoje>
-      <H3>Histórico</H3>
+      <H3 onClick={()=>goTo("/hoje")}>Histórico</H3>
     </FooterStyle>
   );
 }
