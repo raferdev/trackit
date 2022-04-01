@@ -5,7 +5,7 @@ import { LoginContext } from "../../../../assets/context/LoginContext";
 import Selectors from "./selectors";
 import { ThreeDots } from "react-loader-spinner";
 export default function Create(props) {
-  const { setCreate } = props;
+  const { setCreate, setReload } = props;
   const { userData } = useContext(LoginContext);
   const [days, setDays] = useState([]);
   const [habit, setHabit] = useState("");
@@ -26,8 +26,8 @@ export default function Create(props) {
     };
     const promise = axios.post(CREATE_API, body, config);
     promise.then((response) => {
+      setReload(habit)
       setCreate(false);
-      console.log(response.data);
     });
   }
   return (

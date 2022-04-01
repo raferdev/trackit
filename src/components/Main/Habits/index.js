@@ -8,19 +8,9 @@ import { LoginContext } from "../../../assets/context/LoginContext.js";
 import axios from "axios";
 export default function Habitos() {
   const { userData } = useContext(LoginContext);
+  const [reload, setReload] = useState(0)
   const [create, setCreate] = useState(false);
-  const [habits, setHabits] = useState([
-    {
-      id: 1,
-      name: "Nome do hábito",
-      days: [1, 3, 5],
-    },
-    {
-      id: 2,
-      name: "Nome do hábito 2",
-      days: [1, 3, 4, 6],
-    },
-  ]);
+  const [habits, setHabits] = useState([]);
   useEffect(() => {
     const RELOAD_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
     const config = {
@@ -32,7 +22,19 @@ export default function Habitos() {
     promise.then(response => (
       setHabits(response.data)
     ));
-    },[])
+    },[reload])
+    function Delete(id) {
+      const DELETE_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      };
+      const promise = axios.delete(DELETE_API,config);
+    promise.then(response => (
+      setReload(id)
+    ));
+    }
   return (
     <>
       <Header />
@@ -43,14 +45,14 @@ export default function Habitos() {
             <p>+</p>
           </Button>
         </Section>
-        {create ? <Create setCreate={setCreate} /> : <></>}
+        {create ? <Create setCreate={setCreate} setReload={setReload} /> : <></>}
         <Article>
           {habits.length > 0 ? (
             habits.map((habit, index) => (
               <HabitDiv key={index}>
                 <HabitHead>
                   <H3>{habit.name}</H3>
-                  <img src={trashImg}></img>
+                  <ButtonTrash onClick={()=>Delete(habit.id)}><img src={trashImg}></img></ButtonTrash>
                 </HabitHead>
                 <DivWeek>
                   <Week
@@ -206,3 +208,7 @@ const H3 = styled.h3`
   line-height: 25px;
   color: #666666;
 `;
+const ButtonTrash = styled.button`
+border:none;
+background-color: #ffffff;
+`
