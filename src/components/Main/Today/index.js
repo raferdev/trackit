@@ -2,6 +2,8 @@ import Header from "../Header";
 import Footer from "../Footer";
 import styled from "styled-components";
 import axios from "axios";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
 import { LoginContext } from "../../../assets/context/LoginContext.js";
 import { useEffect, useState, useContext } from "react";
 import { ReactComponent as ReactLogo } from "../../../assets/img/checkbox.svg";
@@ -22,30 +24,42 @@ export default function Hoje() {
     <>
       <Header />
       <Main>
+        <HeaderDiv>
+          <DayDiv>{dayjs().locale("pt-br").format("dddd, DD/MM")}</DayDiv>
+          <PercentageDiv>Nenhum hábito concluído ainda</PercentageDiv>
+        </HeaderDiv>
         {todayHabits.map((habit, index) => {
           const curDays = habit.currentSequence;
           const higDays = habit.highestSequence;
-          const seqAtual = curDays > 1 || curDays==0 ? `${curDays} dias` : `${curDays} dia`;
-          const record = higDays > 1 || higDays==0 ? `${higDays} dias` : `${higDays} dia`;
+          const seqAtual =
+            curDays > 1 || curDays == 0 ? `${curDays} dias` : `${curDays} dia`;
+          const record =
+            higDays > 1 || higDays == 0 ? `${higDays} dias` : `${higDays} dia`;
           return (
-            <HeaderDiv key={index} fill={habit.done ? "#8FC549" : "#EBEBEB"}>
+            <HabitDiv key={index} fill={habit.done ? "#8FC549" : "#EBEBEB"}>
               <TextDiv>
                 <H2>{habit.name}</H2>
                 <H3>
-                  Sequência atual: 
+                  Sequência atual:
                   <Strong color={habit.done ? "#8FC549" : "#666666;"}>
                     {seqAtual}
                   </Strong>
                 </H3>
                 <H3>
-                  Seu recorde: 
-                  <Strong color={curDays >= higDays && curDays!=0 ? "#8FC549" : "#666666;"}>
+                  Seu recorde:
+                  <Strong
+                    color={
+                      curDays >= higDays && curDays != 0
+                        ? "#8FC549"
+                        : "#666666;"
+                    }
+                  >
                     {record}
                   </Strong>
                 </H3>
               </TextDiv>
-              <ReactLogo />
-            </HeaderDiv>
+              <ReactLogo onClick={()=>console.log(1)}/>
+            </HabitDiv>
           );
         })}
       </Main>
@@ -59,7 +73,7 @@ const Main = styled.main`
   height: 100%;
   background: #e5e5e5;
 `;
-const HeaderDiv = styled.header`
+const HabitDiv = styled.header`
   display: flex;
   padding: 13px 11px 13px 15px;
   width: 100%;
@@ -84,7 +98,7 @@ const H2 = styled.h2`
 `;
 const TextDiv = styled.div``;
 const Strong = styled.div`
-    margin-left: 5px;
+  margin-left: 5px;
   color: ${(props) => props.color};
 `;
 const H3 = styled.h3`
@@ -95,4 +109,26 @@ const H3 = styled.h3`
   font-size: 12.976px;
   line-height: 16px;
   color: #666666;
+`;
+const DayDiv = styled.h1`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22.976px;
+  line-height: 29px;
+  color: #126ba5;
+`;
+const PercentageDiv = styled.h4`
+font-family: 'Lexend Deca';
+font-style: normal;
+font-weight: 400;
+font-size: 17.976px;
+line-height: 22px;
+color: #BABABA;`;
+const HeaderDiv = styled.div`
+  display: flex;
+  flex-direction:column;
+  justify-content:center;
+  width: 100%;
+  height: 100px;
 `;
