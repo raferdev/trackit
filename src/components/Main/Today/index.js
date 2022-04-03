@@ -12,6 +12,7 @@ export default function Hoje() {
   const [refresh, setRefresh] = useState("");
   const [todayHabits, setTodayHabits] = useState([]);
   const [doneArr, setDoneArr] = useState([]);
+  const percentage = (doneArr.length*100)/todayHabits.length
   useEffect(() => {
     const TODAY_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
     const config = {
@@ -67,7 +68,7 @@ export default function Hoje() {
           />
         ))}
       </Main>
-      <Footer />
+      <Footer percentage={percentage}/>
     </>
   );
 }

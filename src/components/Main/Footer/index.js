@@ -1,18 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { TailSpin } from "react-loader-spinner";
-export default function Footer() {
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import 'react-circular-progressbar/dist/styles.css';
+export default function Footer({ percentage }) {
   const navigate = useNavigate();
   function goTo(to) {
-    navigate(to)
+    navigate(to);
   }
   return (
     <FooterStyle>
-      <H3 onClick={()=>goTo("/habitos")}>Hábitos</H3>
-      <Hoje onClick={()=>goTo("/hoje")}>
-        <TailSpin stop="true"color="white" display="none" ariaLabel="loading-indicator"/>
+      <H3 onClick={() => goTo("/habitos")}>Hábitos</H3>
+      <Hoje onClick={() => goTo("/hoje")}>
+        <CircularProgressbar
+          value={percentage}
+          text={"Hoje"}
+          background
+          backgroundPadding={6}
+          styles={buildStyles({
+            backgroundColor: "#3e98c7",
+            textColor: "#fff",
+            pathColor: "#fff",
+            trailColor: "transparent",
+          })}
+        />
       </Hoje>
-      <H3 onClick={()=>goTo("/hoje")}>Histórico</H3>
+      <H3 onClick={() => goTo("/hoje")}>Histórico</H3>
     </FooterStyle>
   );
 }
@@ -24,6 +36,7 @@ const FooterStyle = styled.footer`
   left: 0;
   background: #ffffff;
   display: flex;
+  align-items:center;
   justify-content: space-between;
   padding: 0 36px;
 `;
@@ -38,7 +51,7 @@ const H3 = styled.h3`
 `;
 const Hoje = styled.div`
   position: relative;
-  top:-50px;
+  top: -20px;
   height: 91px;
   width: 91px;
   background-color: #52b6ff;
