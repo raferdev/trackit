@@ -10,9 +10,7 @@ import { useState } from "react";
 import { LoginContext } from "./assets/context/LoginContext";
 const root = document.querySelector(".root");
 export default function App() {
-  const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("userData"))
-  );
+  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
   return (
     <>
       <GlobalStyle />

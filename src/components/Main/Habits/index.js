@@ -18,6 +18,7 @@ export default function Habitos() {
         Authorization: `Bearer ${userData.token}`,
       },
     };
+
     const promise = axios.get(RELOAD_API,config);
     promise.then(response => (
       setHabits(response.data)

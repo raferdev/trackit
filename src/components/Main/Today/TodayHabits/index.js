@@ -4,9 +4,9 @@ export default function TodayHabits({habit, CheckUncheck}) {
     const curDays = habit.currentSequence;
     const higDays = habit.highestSequence;
     const seqAtual =
-      curDays > 1 || curDays == 0 ? `${curDays} dias` : `${curDays} dia`;
+      curDays > 1 || curDays === 0 ? `${curDays} dias` : `${curDays} dia`;
     const record =
-      higDays > 1 || higDays == 0 ? `${higDays} dias` : `${higDays} dia`;
+      higDays > 1 || higDays === 0 ? `${higDays} dias` : `${higDays} dia`;
     function doneOrNot(id,done) {
         if(done) {
             CheckUncheck(id,false);
@@ -28,7 +28,7 @@ export default function TodayHabits({habit, CheckUncheck}) {
             Seu recorde:
             <Strong
               color={
-                curDays >= higDays && curDays != 0
+                curDays >= higDays && curDays !== 0
                   ? "#8FC549"
                   : "#666666;"
               }

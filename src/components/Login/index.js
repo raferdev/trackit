@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../assets/context/LoginContext";
 export default function Login() {
-  localStorage.setItem('userData', JSON.stringify([]))
   const LOGIN_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`;
+  const { setUserData } = useContext(LoginContext);
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -29,7 +30,8 @@ export default function Login() {
         name: data.name,
         token: data.token,
       };
-      localStorage.setItem('userData', JSON.stringify(userLogin))
+      localStorage.setItem('userData', JSON.stringify(userLogin));
+      setUserData(JSON.parse(localStorage.getItem("userData")))
       navigate("/habitos");
     });
     promise.catch((response) => console.log(response));

@@ -3,7 +3,7 @@ export default function Header() {
   return (
     <HeaderStyle>
       <H2>TrackIt</H2>
-      <User></User>
+      <User http={(JSON.parse(localStorage.getItem("userData"))).image}></User>
     </HeaderStyle>
   );
 }
@@ -37,5 +37,5 @@ const User = styled.button`
   background-size: contain;
   border-radius: 50%;
   background-clip: border-box;
-  background-image: url(https://hiperideal.vteximg.com.br/arquivos/ids/167660-1000-1000/27502.jpg?v=636615816147030000);
+  background-image: ${props=> `url(${props.http})`};
 `;

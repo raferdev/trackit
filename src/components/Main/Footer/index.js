@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { TailSpin } from "react-loader-spinner";
 export default function Footer() {
   const navigate = useNavigate();
   function goTo(to) {
@@ -9,7 +10,7 @@ export default function Footer() {
     <FooterStyle>
       <H3 onClick={()=>goTo("/habitos")}>Hábitos</H3>
       <Hoje onClick={()=>goTo("/hoje")}>
-        <p>Hoje</p>
+        <TailSpin stop="true"color="white" display="none" ariaLabel="loading-indicator"/>
       </Hoje>
       <H3 onClick={()=>goTo("/hoje")}>Histórico</H3>
     </FooterStyle>
