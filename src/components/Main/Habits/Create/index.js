@@ -25,14 +25,13 @@ export default function Create(props) {
       days: days,
     };
     const promise = axios.post(CREATE_API, body, config);
-    promise.then((response) => {
-      setReload(habit)
+    promise.then(() => {
+      setReload(habit);
       setCreate(false);
     });
   }
   return (
     <SectionCreate>
-      <Div>
         <form onSubmit={Post}>
           <Input
             placeholder="nome do hábito"
@@ -75,7 +74,6 @@ export default function Create(props) {
             </ButtonSave>
           </NavButtons>
         </form>
-      </Div>
     </SectionCreate>
   );
 }
@@ -83,12 +81,13 @@ const SectionCreate = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 100%;
+  width: 340px;
   height: 180px;
   background: #ffffff;
   border-radius: 5px;
   padding: 16px;
   margin-bottom: 30px;
+  flex-shrink:0;
 `;
 const Input = styled.input`
   width: 303px;
@@ -111,7 +110,6 @@ const Input = styled.input`
     outline: none;
   }
 `;
-const Div = styled.section``;
 const ButtonsWeek = styled.div`
   display: flex;
 `;

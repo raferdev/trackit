@@ -15,16 +15,18 @@ export default function Hoje() {
   const percentage = (doneArr.length*100)/todayHabits.length
   useEffect(() => {
     const TODAY_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
+    const token = userData.token
     const config = {
       headers: {
-        Authorization: `Bearer ${userData.token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     const promise = axios.get(TODAY_API, config);
-    promise.then((response) => (
-      setDoneArr(response.data.filter(habit=>habit.done?true:false)),
+    promise.then((response) => {
+      setDoneArr(response.data.filter(habit=>habit.done?true:false))
       setTodayHabits(response.data)
-      ));
+    });
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
   function CheckUncheck(id, done) {
     id = id.toString();

@@ -1,9 +1,22 @@
-import { createGlobalStyle } from 'styled-components';
- 
+import { createGlobalStyle } from "styled-components";
+
 const GlobalStyle = createGlobalStyle`
+ *::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+} 
   html,body,.root {
-   height:100%;
-   width:100%;
+   min-height:100%;
+   min-width:100%;
+  }
+  .root {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+	background: #e5e5e5;
   }
   *{
     box-sizing:border-box;
@@ -53,5 +66,5 @@ table {
 }
 
 `;
- 
+
 export default GlobalStyle;

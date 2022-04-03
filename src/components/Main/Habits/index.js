@@ -8,52 +8,60 @@ import { LoginContext } from "../../../assets/context/LoginContext.js";
 import axios from "axios";
 export default function Habitos() {
   const { userData } = useContext(LoginContext);
-  const [reload, setReload] = useState(0)
+  const [reload, setReload] = useState(0);
   const [create, setCreate] = useState(false);
   const [habits, setHabits] = useState([]);
   useEffect(() => {
+    const token = userData.token;
     const RELOAD_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const promise = axios.get(RELOAD_API, config);
+    promise.then((response) => setHabits(response.data));
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reload]);
+  function Delete(id) {
+    const DELETE_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
     const config = {
       headers: {
         Authorization: `Bearer ${userData.token}`,
       },
     };
-
-    const promise = axios.get(RELOAD_API,config);
-    promise.then(response => (
-      setHabits(response.data)
-    ));
-    },[reload])
-    function Delete(id) {
-      const DELETE_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userData.token}`,
-        },
-      };
-      const promise = axios.delete(DELETE_API,config);
-    promise.then(response => (
-      setReload(id)
-    ));
-    }
+    const promise = axios.delete(DELETE_API, config);
+    promise.then(() => setReload(id));
+  }
   return (
     <>
       <Header />
       <Main>
         <Section>
           <H2>Meus hábitos</H2>
-          <Button onClick={() => setCreate(true)}>
-            <p>+</p>
-          </Button>
+          <Button onClick={() => setCreate(true)}></Button>
         </Section>
-        {create ? <Create setCreate={setCreate} setReload={setReload} /> : <></>}
+        <TransitionDiv
+          opacity={create ? 1 : 0}
+          width={create ? "340px" : 0}
+          height={create ? "200px" : 0}
+        >
+          {create ? (
+            <Create setCreate={setCreate} setReload={setReload} />
+          ) : (
+            <></>
+          )}
+        </TransitionDiv>
         <Article>
           {habits.length > 0 ? (
             habits.map((habit, index) => (
               <HabitDiv key={index}>
                 <HabitHead>
                   <H3>{habit.name}</H3>
-                  <ButtonTrash onClick={()=>Delete(habit.id)}><img src={trashImg}></img></ButtonTrash>
+                  <ButtonTrash onClick={() => Delete(habit.id)}>
+                    <img src={trashImg} alt="trash-icon"></img>
+                  </ButtonTrash>
                 </HabitHead>
                 <DivWeek>
                   <Week
@@ -116,17 +124,21 @@ export default function Habitos() {
   );
 }
 const Main = styled.main`
-  padding: 70px 18px 0px 18px;
-  width: 100%;
-  height: 100%;
-  background: #e5e5e5;
+margin: 70px 18px 70px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 500px;;
+  min-height: 100%;
 `;
 const Section = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 77px;
+  width: 340px;
+  height: 100px;
+  flex-shrink: 0;
 `;
 const H2 = styled.h2`
   font-family: "Lexend Deca";
@@ -152,7 +164,10 @@ const Button = styled.button`
   border: none;
 `;
 const Article = styled.article`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  min-height:100%;
   font-family: "Lexend Deca";
   font-style: normal;
   font-weight: 400;
@@ -174,6 +189,8 @@ const HabitDiv = styled.div`
 `;
 const DivWeek = styled.div`
   display: flex;
+  width:340px;
+  flex-shrink:0;
 `;
 const Week = styled.button`
   display: flex;
@@ -210,6 +227,14 @@ const H3 = styled.h3`
   color: #666666;
 `;
 const ButtonTrash = styled.button`
-border:none;
-background-color: #ffffff;
-`
+  border: none;
+  background-color: #ffffff;
+`;
+const TransitionDiv = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  opacity: ${(props) => props.opacity};
+  transition: all 400ms;
+`;
