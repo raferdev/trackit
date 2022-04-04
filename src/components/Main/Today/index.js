@@ -63,7 +63,7 @@ export default function Hoje() {
           <DayDiv>
             {dayjs().locale("pt-br").format("dddd, DD/MM")}
           </DayDiv>
-          <PercentageDiv color={doneArr.length > 0 ? "#8FC549" : "#bababa"}>{doneArr.length>0?`${percentage}% dos hábitos concluídos`:"Nenhum hábito concluído ainda"}</PercentageDiv>
+          <PercentageDiv color={doneArr.length > 0 ? "#8FC549" : "#bababa"}>{doneArr.length>0?`${parseInt(percentage)}% dos hábitos concluídos`:"Nenhum hábito concluído ainda"}</PercentageDiv>
         </HeaderDiv>
         {todayHabits.map((habit, index) => (
           <TodayHabits
@@ -77,7 +77,7 @@ export default function Hoje() {
   );
 }
 const Main = styled.main`
-  padding: 70px 18px 0px 18px;
+  padding: 70px 18px 70px 18px;
   width: 100%;
   height: 100%;
   background: #e5e5e5;

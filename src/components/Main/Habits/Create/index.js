@@ -96,6 +96,7 @@ const Input = styled.input`
   height: 45px;
   left: 36px;
   top: 165px;
+  padding-left:10px;
   background-color: ${(props) => props.background};
   border: 1px solid #d5d5d5;
   box-sizing: border-box;

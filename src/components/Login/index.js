@@ -1,6 +1,7 @@
-import logo from "../../assets/img/logo.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { ReactComponent as LockLogo } from "./../../assets/img/lock-closed-outline.svg";
+import { ReactComponent as MailLogo } from "./../../assets/img/mail-outline.svg";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import { useState, useContext } from "react";
@@ -29,7 +30,7 @@ export default function Login() {
         image: data.image,
         name: data.name,
         token: data.token,
-        login: true
+        login: true,
       };
       localStorage.setItem("userData", JSON.stringify(userLogin));
       setUserData(JSON.parse(localStorage.getItem("userData")));
@@ -38,13 +39,16 @@ export default function Login() {
     promise.catch((response) => {
       alert("deu ruim tenta dnv");
       setSubmit(false);
-      console.log(response)});
+      console.log(response);
+    });
   }
   return (
     <Main>
-      <Img src={logo}></Img>
+      <H2>TrackIt</H2>
+      <H3>The healthiest habit to have</H3>
       <Section>
         <form onSubmit={submitLogin}>
+          <Div><MailLogo/>
           <Input
             type="text"
             placeholder="email"
@@ -53,6 +57,8 @@ export default function Login() {
             required
             disabled={submit ? true : false}
           ></Input>
+          </Div>
+          <Div><LockLogo/>
           <Input
             type="password"
             placeholder="senha"
@@ -61,6 +67,7 @@ export default function Login() {
             required
             disabled={submit ? true : false}
           ></Input>
+          </Div>
           <Button
             type="submit"
             opacity={submit ? 0.7 : 1}
@@ -90,18 +97,19 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: #e5e5e5;
-  z-index:1;
-`;
-const Img = styled.img`
-  width: 180px;
-  height: auto;
+  background: #ffffff;
+  z-index: 1;
 `;
 const Section = styled.section`
   margin-top: 35px;
   width: 303px;
 `;
 const Input = styled.input`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
   height: 45px;
   width: 100%;
   margin-bottom: 6px;
@@ -110,14 +118,21 @@ const Input = styled.input`
   padding-left: 10px;
 `;
 const Button = styled.button`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 45px;
   width: 100%;
-  background: #52b6ff;
+  margin-top: 10px;
+  background-color: #126ba5;
   opacity: ${(props) => props.opacity};
   border-radius: 4.63636px;
+  color: #ffffff;
 `;
 const RegisterDiv = styled.div`
   height: 65px;
@@ -125,4 +140,40 @@ const RegisterDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  a {
+    text-decoration: none;
+    color: inherit;
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17.976px;
+    line-height: 22px;
+    color: #666666;
+  }
 `;
+const H2 = styled.h2`
+  font-family: "Playball";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 90px;
+  line-height: 49px;
+  color: #126ba5;
+  margin-bottom: 10px;
+`;
+const H3 = styled.h3`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 49px;
+  color: #000000;
+`;
+const Div = styled.div`
+position:relative;
+.ionicon{
+  position:relative;
+  bottom:-35px;
+  left:-25px;
+  height:20px;
+}
+`

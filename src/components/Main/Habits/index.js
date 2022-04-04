@@ -57,7 +57,7 @@ export default function Habitos() {
       <Main>
         <Section>
           <H2>Meus hábitos</H2>
-          <Button onClick={() => {setCreate(true);setShowCreate(true)}}></Button>
+          <Button onClick={() => {setCreate(true);setShowCreate(true)}}>+</Button>
         </Section>
         <TransitionDiv
           opacity={showCreate ? 1 : 0}

@@ -92,7 +92,7 @@ const Main = styled.main`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: #e5e5e5;
+  background: #ffffff;
   z-index:1;
 `;
 const Img = styled.img`

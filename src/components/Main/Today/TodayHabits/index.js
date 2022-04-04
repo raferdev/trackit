@@ -1,4 +1,4 @@
-import { ReactComponent as ReactLogo } from "../../../../assets/img/checkbox.svg";
+import { ReactComponent as CheckLogo } from "../../../../assets/img/checkbox.svg";
 import styled from "styled-components";
 export default function TodayHabits({habit, CheckUncheck}) {
     const curDays = habit.currentSequence;
@@ -38,7 +38,7 @@ export default function TodayHabits({habit, CheckUncheck}) {
           </H3>
         </TextDiv>
         <div onClick={()=>doneOrNot(habit.id,habit.done)}>
-        <ReactLogo/>
+        <CheckLogo/>
         </div>
       </HabitDiv>
     );
