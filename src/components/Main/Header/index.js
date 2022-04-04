@@ -1,9 +1,13 @@
 import styled from "styled-components";
 export default function Header() {
+  let http = ""
+  if((JSON.parse(localStorage.getItem("userData")))!==null) {
+    http = (JSON.parse(localStorage.getItem("userData"))).image
+  }
   return (
     <HeaderStyle>
       <H2>TrackIt</H2>
-      <User http={(JSON.parse(localStorage.getItem("userData"))).image}></User>
+      <User http={http}></User>
     </HeaderStyle>
   );
 }

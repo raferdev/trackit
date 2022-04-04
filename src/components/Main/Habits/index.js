@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Create from "./Create";
 import trashImg from "../../../assets/img/trash.jpg";
+import { ReactComponent as TrashLogo } from "./../../../assets/img/trash-outline.svg";
 import { useContext, useState, useEffect } from "react";
 import { LoginContext } from "../../../assets/context/LoginContext.js";
 import {PercentageContext} from "../../../assets/context/PercentageContext.js"
@@ -73,7 +74,7 @@ export default function Habitos() {
                 <HabitHead>
                   <H3>{habit.name}</H3>
                   <ButtonTrash onClick={() => Delete(habit.id)}>
-                    <img src={trashImg} alt="trash-icon"></img>
+                  <TrashLogo/>
                   </ButtonTrash>
                 </HabitHead>
                 <DivWeek>
@@ -240,6 +241,9 @@ const H3 = styled.h3`
 const ButtonTrash = styled.button`
   border: none;
   background-color: #ffffff;
+  .ionicon{
+    height:20px;
+  }
 `;
 const TransitionDiv = styled.div`
   display: flex;

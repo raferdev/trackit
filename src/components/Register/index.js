@@ -1,10 +1,13 @@
-import logo from "../../assets/img/logo.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { ReactComponent as LockLogo } from "./../../assets/img/lock-closed-outline.svg";
+import { ReactComponent as MailLogo } from "./../../assets/img/mail-outline.svg";
+import { ReactComponent as UserLogo } from "./../../assets/img/person-add-outline.svg";
+import { ReactComponent as ImageLogo } from "./../../assets/img/image-outline.svg";
 export default function Register() {
   const REGISTER_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`;
   const [submit, setSubmit] = useState(false);
@@ -25,50 +28,70 @@ export default function Register() {
 
     const promise = axios.post(REGISTER_API, dados);
     promise.then(() => {
-      navigate("/login")
+      navigate("/login");
     });
     promise.catch((response) => {
       alert("deu ruim tenta dnv");
       setSubmit(false);
-      console.log(response)});
+      console.log(response);
+    });
   }
   return (
     <Main>
-      <Img src={logo}></Img>
+      <Logo>
+        <H2>TrackIt</H2>
+        <H3>The healthiest habit to have</H3>
+      </Logo>
       <Section>
         <form onSubmit={submitRegister}>
-          <Input
-            type="text"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            disabled={submit ? true : false}
-          ></Input>
-          <Input
-            type="password"
-            placeholder="senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            disabled={submit ? true : false}
-          ></Input>
-          <Input
-            type="text"
-            placeholder="nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            disabled={submit ? true : false}
-          ></Input>
-          <Input
-            type="text"
-            placeholder="foto"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            required
-            disabled={submit ? true : false}
-          ></Input>
+          <Div>
+            {" "}
+            <MailLogo />
+            <Input
+              type="email"
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={submit ? true : false}
+            ></Input>
+          </Div>
+          <Div>
+            {" "}
+            <LockLogo />
+            <Input
+              type="password"
+              placeholder="senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={submit ? true : false}
+            ></Input>
+          </Div>
+          <Div>
+            {" "}
+            <UserLogo />
+            <Input
+              type="text"
+              placeholder="nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              disabled={submit ? true : false}
+            ></Input>
+          </Div>
+          <Div>
+            {" "}
+            <ImageLogo />
+            <Input
+              type="text"
+              placeholder="foto"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+              required
+              disabled={submit ? true : false}
+            ></Input>
+          </Div>
           <Button type="submit" opacity={submit ? 0.7 : 1}>
             {submit ? (
               <ThreeDots color="#FFFFFF" height={80} width={80} />
@@ -87,37 +110,50 @@ export default function Register() {
 const Main = styled.main`
   height: 100%;
   width: 100%;
-  position:absolute;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   background: #ffffff;
-  z-index:1;
-`;
-const Img = styled.img`
-  width: 180px;
-  height: auto;
+  z-index: 1;
 `;
 const Section = styled.section`
   margin-top: 35px;
   width: 303px;
 `;
 const Input = styled.input`
+  display: flex;
+  flex-shrink: 0;
   height: 45px;
   width: 100%;
-  margin-bottom: 6px;
   border: 1px solid #d5d5d5;
   border-radius: 5px;
+  padding-left: 10px;
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
+  outline:none;
 `;
 const Button = styled.button`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 45px;
   width: 100%;
-  background: #52b6ff;
+  margin-top: 40px;
+  background-color: #126ba5;
+  opacity: ${(props) => props.opacity};
   border-radius: 4.63636px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  color: #ffffff;
+  border: none;
 `;
 const RegisterDiv = styled.div`
   height: 65px;
@@ -125,4 +161,51 @@ const RegisterDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  a {
+    text-decoration: none;
+    color: inherit;
+    font-family: "Lexend Deca";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17.976px;
+    line-height: 22px;
+    color: #666666;
+  }
+`;
+const H2 = styled.h2`
+  font-family: "Playball";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 90px;
+  line-height: 49px;
+  color: #126ba5;
+  margin-bottom: 10px;
+`;
+const H3 = styled.h3`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 49px;
+  color: #000000;
+  margin-top:-10px;
+`;
+const Div = styled.div`
+  position: relative;
+  margin-bottom: -10px;
+  .ionicon {
+    position: relative;
+    bottom: -35px;
+    left: -25px;
+    height: 20px;
+  }
+`;
+const Logo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  margin-bottom: -30px;
 `;

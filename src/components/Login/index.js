@@ -44,13 +44,15 @@ export default function Login() {
   }
   return (
     <Main>
+      <Logo>
       <H2>TrackIt</H2>
       <H3>The healthiest habit to have</H3>
+      </Logo>
       <Section>
         <form onSubmit={submitLogin}>
           <Div><MailLogo/>
           <Input
-            type="text"
+            type="email"
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -112,10 +114,10 @@ const Input = styled.input`
   line-height: 22px;
   height: 45px;
   width: 100%;
-  margin-bottom: 6px;
   border: 1px solid #d5d5d5;
   border-radius: 5px;
   padding-left: 10px;
+  outline:none;
 `;
 const Button = styled.button`
   font-family: "Lexend Deca";
@@ -128,14 +130,15 @@ const Button = styled.button`
   align-items: center;
   height: 45px;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 40px;
   background-color: #126ba5;
   opacity: ${(props) => props.opacity};
   border-radius: 4.63636px;
   color: #ffffff;
+  border: none;
 `;
 const RegisterDiv = styled.div`
-  height: 65px;
+  height: 40px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -167,13 +170,24 @@ const H3 = styled.h3`
   font-size: 20px;
   line-height: 49px;
   color: #000000;
+  margin-top:-10px;
 `;
 const Div = styled.div`
-position:relative;
-.ionicon{
-  position:relative;
-  bottom:-35px;
-  left:-25px;
-  height:20px;
-}
-`
+  position: relative;
+  margin-bottom: -10px;
+  .ionicon {
+    position: relative;
+    bottom: -35px;
+    left: -25px;
+    height: 20px;
+  }
+`;
+const Logo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  margin-bottom: -30px;
+`;
