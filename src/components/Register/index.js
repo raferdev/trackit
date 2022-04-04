@@ -116,7 +116,7 @@ const Main = styled.main`
   align-items: center;
   flex-direction: column;
   background: #ffffff;
-  z-index: 1;
+  z-index: 2;
 `;
 const Section = styled.section`
   margin-top: 35px;

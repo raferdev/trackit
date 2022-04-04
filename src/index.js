@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Header from "./components/Main/Header";
 import Footer from "./components/Main/Footer";
 import Register from "./components/Register";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Habitos from "./components/Main/Habits";
 import Hoje from "./components/Main/Today";
 import History from "./components/Main/History";
@@ -15,6 +15,7 @@ const root = document.querySelector(".root");
 export default function App() {
   const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
   const [percentage, setPercentage] = useState(0);
+  const [login, setLogin] = useState(JSON.parse(localStorage.getItem("loginDone")));
   return (
     <>
       <GlobalStyle />
@@ -24,7 +25,11 @@ export default function App() {
             <Header />
             <Footer />
             <Routes>
-              <Route path="/login" element={<Login />} />
+              <Route path="/" element={login!==null&&login===true
+              ? <Navigate to="/habitos"/>
+              : <Navigate to="/login" />
+            }/>
+              <Route path="/login" element={<Login setLogin={setLogin} />} />
               <Route path="/cadastro" element={<Register />} />
               <Route path="/habitos" element={<Habitos />} />
               <Route path="/hoje" element={<Hoje />} />

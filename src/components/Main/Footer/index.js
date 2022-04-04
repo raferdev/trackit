@@ -1,35 +1,37 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { PercentageContext } from "../../../assets/context/PercentageContext";
 import { useContext } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import 'react-circular-progressbar/dist/styles.css';
+import "react-circular-progressbar/dist/styles.css";
 export default function Footer() {
-  const {percentage} = useContext(PercentageContext)
-  const navigate = useNavigate();
-  function goTo(to) {
-    navigate(to);
-  }
+  const { percentage } = useContext(PercentageContext);
   return (
-      <FooterStyle>
-      <H3 onClick={() => goTo("/habitos")}>Hábitos</H3>
-      <Hoje onClick={() => goTo("/hoje")}>
-        <CircularProgressbar
-          value={percentage}
-          text={"Hoje"}
-          background
-          backgroundPadding={6}
-          styles={buildStyles({
-            backgroundColor: "#3e98c7",
-            textColor: "#fff",
-            pathColor: "#fff",
-            trailColor: "transparent",
-          })}
-        />
-      </Hoje>
-      <H3 onClick={() => goTo("/historico")}>Histórico</H3>
+    <FooterStyle>
+      <Link to="/habitos">
+        <H3>Hábitos</H3>
+      </Link>
+      <Link to="/hoje">
+        <Hoje>
+          <CircularProgressbar
+            value={percentage}
+            text={"Hoje"}
+            background
+            backgroundPadding={6}
+            styles={buildStyles({
+              backgroundColor: "#3e98c7",
+              textColor: "#fff",
+              pathColor: "#fff",
+              trailColor: "transparent",
+            })}
+          />
+        </Hoje>
+      </Link>
+      <Link to="/historico">
+        <H3>Histórico</H3>
+      </Link>
     </FooterStyle>
-    )
+  );
 }
 const FooterStyle = styled.footer`
   height: 70px;
@@ -39,10 +41,13 @@ const FooterStyle = styled.footer`
   left: 0;
   background: #ffffff;
   display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: space-between;
   padding: 0 36px;
-  z-index:2;
+  z-index: 2;
+  a{
+    text-decoration: none;
+  }
 `;
 const H3 = styled.h3`
   font-family: "Lexend Deca";

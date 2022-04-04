@@ -7,7 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../assets/context/LoginContext";
-export default function Login() {
+export default function Login({setLogin}) {
   const LOGIN_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`;
   const { setUserData } = useContext(LoginContext);
   const navigate = useNavigate();
@@ -33,7 +33,9 @@ export default function Login() {
         login: true,
       };
       localStorage.setItem("userData", JSON.stringify(userLogin));
+      localStorage.setItem("loginDone",JSON.stringify(true))
       setUserData(JSON.parse(localStorage.getItem("userData")));
+      setLogin(JSON.parse(localStorage.getItem("loginDone")))
       navigate("/habitos");
     });
     promise.catch((response) => {
@@ -100,7 +102,7 @@ const Main = styled.main`
   align-items: center;
   flex-direction: column;
   background: #ffffff;
-  z-index: 1;
+  z-index: 2;
 `;
 const Section = styled.section`
   margin-top: 35px;
