@@ -42,6 +42,7 @@ const FooterStyle = styled.footer`
   align-items:center;
   justify-content: space-between;
   padding: 0 36px;
+  z-index:2;
 `;
 const H3 = styled.h3`
   font-family: "Lexend Deca";

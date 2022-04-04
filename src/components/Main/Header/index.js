@@ -23,6 +23,7 @@ const HeaderStyle = styled.header`
   height: 70px;
   background-color: rgba(18, 107, 165, 1);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  z-index:2;
 `;
 const H2 = styled.h2`
   font-family: "Playball";

@@ -83,7 +83,7 @@ export default function Login() {
           </Button>
         </form>
         <RegisterDiv>
-          <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+          <Link to="/cadastro">Não tem uma conta? <Span>Cadastre-se!</Span></Link>
         </RegisterDiv>
       </Section>
     </Main>
@@ -131,7 +131,7 @@ const Button = styled.button`
   height: 45px;
   width: 100%;
   margin-top: 40px;
-  background-color: #126ba5;
+  background-color: #52B6FF;
   opacity: ${(props) => props.opacity};
   border-radius: 4.63636px;
   color: #ffffff;
@@ -151,7 +151,7 @@ const RegisterDiv = styled.div`
     font-weight: 400;
     font-size: 17.976px;
     line-height: 22px;
-    color: #666666;
+    color: #1A1A1A;
   }
 `;
 const H2 = styled.h2`
@@ -169,7 +169,7 @@ const H3 = styled.h3`
   font-weight: 400;
   font-size: 20px;
   line-height: 49px;
-  color: #000000;
+  color: #1A1A1A;
   margin-top:-10px;
 `;
 const Div = styled.div`
@@ -191,3 +191,6 @@ const Logo = styled.div`
   width: 100%;
   margin-bottom: -30px;
 `;
+const Span = styled.span`
+color: #52b6ff;;
+`
