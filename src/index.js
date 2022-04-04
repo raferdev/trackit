@@ -26,7 +26,7 @@ export default function App() {
             <Footer />
             <Routes>
               <Route path="/" element={login!==null&&login===true
-              ? <Navigate to="/habitos"/>
+              ? <Navigate to="/hoje"/>
               : <Navigate to="/login" />
             }/>
               <Route path="/login" element={<Login setLogin={setLogin} />} />

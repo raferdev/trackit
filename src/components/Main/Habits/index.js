@@ -3,33 +3,14 @@ import Create from "./Create";
 import { ReactComponent as TrashLogo } from "./../../../assets/img/trash-outline.svg";
 import { useContext, useState, useEffect } from "react";
 import { LoginContext } from "../../../assets/context/LoginContext.js";
-import { PercentageContext } from "../../../assets/context/PercentageContext.js";
 import axios from "axios";
 export default function Habitos() {
-  const { setPercentage } = useContext(PercentageContext);
   const { userData } = useContext(LoginContext);
   const [reload, setReload] = useState(0);
   const [create, setCreate] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
   const [habits, setHabits] = useState([]);
   const [delPop, setDelPop] = useState(-1)
-  useEffect(() => {
-    const TODAY_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
-    const token = userData.token;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const promise = axios.get(TODAY_API, config);
-    promise.then((response) => {
-      const done = response.data.filter((habit) => (habit.done ? true : false));
-      const all = response.data;
-      const percent = (done.length * 100) / all.length;
-      setPercentage(percent);
-    });
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   useEffect(() => {
     const token = userData.token;
     const RELOAD_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
@@ -61,7 +42,7 @@ export default function Habitos() {
           <Button
             onClick={() => {
               setCreate(true);
-              setShowCreate(true);
+              setShowCreate(showCreate=>showCreate?false:true);
             }}
           >
             +
@@ -92,7 +73,7 @@ export default function Habitos() {
                       display={delPop===habit.id ? "flex" : "none"}>
                   <H4>Deletar o habito?</H4>
                   <DivButtonDell>
-                    <ButtonDellYes onClick={()=>Delete(habit.id)}>sim</ButtonDellYes>
+                    <ButtonDellYes onClick={()=>Delete(habit.id)}>Sim</ButtonDellYes>
                     <ButtonDellNo onClick={()=>setDelPop(-1)}>Não</ButtonDellNo>
                   </DivButtonDell>
                 </DeletePop>
@@ -104,43 +85,43 @@ export default function Habitos() {
                 </HabitHead>
                 <DivWeek>
                   <Week
-                    background={habit.days.includes(0) ? "#CFCFCF" : "#FFFFFF"}
+                    background={habit.days.includes(0) ? "#126BA5" : "#FFFFFF"}
                     color={habit.days.includes(0) ? "#FFFFFF" : "#DBDBDB"}
                   >
                     D
                   </Week>
                   <Week
-                    background={habit.days.includes(1) ? "#CFCFCF" : "#FFFFFF"}
+                    background={habit.days.includes(1) ? "#126BA5" : "#FFFFFF"}
                     color={habit.days.includes(1) ? "#FFFFFF" : "#DBDBDB"}
                   >
                     S
                   </Week>
                   <Week
-                    background={habit.days.includes(2) ? "#CFCFCF" : "#FFFFFF"}
+                    background={habit.days.includes(2) ? "#126BA5" : "#FFFFFF"}
                     color={habit.days.includes(2) ? "#FFFFFF" : "#DBDBDB"}
                   >
                     T
                   </Week>
                   <Week
-                    background={habit.days.includes(3) ? "#CFCFCF" : "#FFFFFF"}
+                    background={habit.days.includes(3) ? "#126BA5" : "#FFFFFF"}
                     color={habit.days.includes(3) ? "#FFFFFF" : "#DBDBDB"}
                   >
                     Q
                   </Week>
                   <Week
-                    background={habit.days.includes(4) ? "#CFCFCF" : "#FFFFFF"}
+                    background={habit.days.includes(4) ? "#126BA5" : "#FFFFFF"}
                     color={habit.days.includes(4) ? "#FFFFFF" : "#DBDBDB"}
                   >
                     Q
                   </Week>
                   <Week
-                    background={habit.days.includes(5) ? "#CFCFCF" : "#FFFFFF"}
+                    background={habit.days.includes(5) ? "#126BA5" : "#FFFFFF"}
                     color={habit.days.includes(5) ? "#FFFFFF" : "#DBDBDB"}
                   >
                     S
                   </Week>
                   <Week
-                    background={habit.days.includes(6) ? "#CFCFCF" : "#FFFFFF"}
+                    background={habit.days.includes(6) ? "#126BA5" : "#FFFFFF"}
                     color={habit.days.includes(6) ? "#FFFFFF" : "#DBDBDB"}
                   >
                     S
@@ -289,10 +270,11 @@ const DeletePop = styled.div`
   right: 0;
   height:${props=>props.height};
   width: ${props=>props.width};
-  background-color: #ffff;
+  background-color: #F2F2F2;
   z-index:1;
-  opacity: 0.9;
-  transition: all 400ms;
+  opacity: 0.98;
+  transition: all 1s;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 `;
 const ButtonDellYes = styled.button`
   height: 40px;
@@ -326,7 +308,7 @@ const ButtonDellNo = styled.button`
   color: #ffffff;
   outline: none;
   border: none;
-  margin:5px;
+  margin:5px 0;
 `;
 const H4 = styled.h4`
   font-family: "Lexend Deca";
@@ -334,6 +316,7 @@ const H4 = styled.h4`
   font-size: 19px;
   line-height: 34px;
   color: #151515;
+  margin-top: 7px;
 `;
 const DivButtonDell = styled.div`
 display:flex;

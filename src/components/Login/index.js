@@ -36,7 +36,7 @@ export default function Login({setLogin}) {
       localStorage.setItem("loginDone",JSON.stringify(true))
       setUserData(JSON.parse(localStorage.getItem("userData")));
       setLogin(JSON.parse(localStorage.getItem("loginDone")))
-      navigate("/habitos");
+      navigate("/hoje");
     });
     promise.catch((response) => {
       alert("deu ruim tenta dnv");

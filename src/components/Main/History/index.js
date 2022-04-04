@@ -7,7 +7,7 @@ import "react-calendar/dist/Calendar.css";
 export default function History() {
   const { userData } = useContext(LoginContext);
   const [calendarVal, setCalendarVal] = useState(new Date());
-
+  const [ setData] = useState([])
   useEffect(() => {
     const HISTORY_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily`;
     const token = userData.token;
@@ -18,30 +18,39 @@ export default function History() {
     };
     const promise = axios.get(HISTORY_API, config);
     promise.then((response) => {
-      console.log(response.data);
+      setData(response.data);
     });
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Main>
-      <div className="Sample__container">
-        <main className="Sample__container__content">
+      <H1>O seu histórico irá aparecer na proxima atualização do App. :P</H1>
+        <div className="Sample__container__content">
           <Calendar
             onChange={setCalendarVal}
+            formatDate={calendarVal}
             showWeekNumbers
             value={calendarVal}
           />
-        </main>
-      </div>
+        </div>
     </Main>
   );
 }
 const Main = styled.main`
-  margin: 70px 18px 70px 18px;
+  padding: 70px 18px 70px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content:center;
   flex-shrink: 0;
-  width: 500px;
+  width:100%;
   min-height: 100%;
 `;
+const H1 =styled.div`
+font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
+  margin: 30px 0;
+`
