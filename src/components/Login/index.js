@@ -29,12 +29,16 @@ export default function Login() {
         image: data.image,
         name: data.name,
         token: data.token,
+        login: true
       };
-      localStorage.setItem('userData', JSON.stringify(userLogin));
-      setUserData(JSON.parse(localStorage.getItem("userData")))
+      localStorage.setItem("userData", JSON.stringify(userLogin));
+      setUserData(JSON.parse(localStorage.getItem("userData")));
       navigate("/habitos");
     });
-    promise.catch((response) => console.log(response));
+    promise.catch((response) => {
+      alert("deu ruim tenta dnv");
+      setSubmit(false);
+      console.log(response)});
   }
   return (
     <Main>
@@ -46,16 +50,22 @@ export default function Login() {
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required disabled={(submit)?true:false}
+            required
+            disabled={submit ? true : false}
           ></Input>
           <Input
             type="password"
             placeholder="senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required disabled={(submit)?true:false}
+            required
+            disabled={submit ? true : false}
           ></Input>
-          <Button type="submit" opacity={submit?0.7:1} disabled={(submit)?true:false}>
+          <Button
+            type="submit"
+            opacity={submit ? 0.7 : 1}
+            disabled={submit ? true : false}
+          >
             {submit ? (
               <ThreeDots color="#FFFFFF" height={80} width={80} />
             ) : (
@@ -71,12 +81,17 @@ export default function Login() {
   );
 }
 const Main = styled.main`
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background: #e5e5e5;
+  z-index:1;
 `;
 const Img = styled.img`
   width: 180px;
@@ -92,7 +107,7 @@ const Input = styled.input`
   margin-bottom: 6px;
   border: 1px solid #d5d5d5;
   border-radius: 5px;
-  padding-left:10px;
+  padding-left: 10px;
 `;
 const Button = styled.button`
   display: flex;
@@ -101,7 +116,7 @@ const Button = styled.button`
   height: 45px;
   width: 100%;
   background: #52b6ff;
-  opacity: ${props => props.opacity};
+  opacity: ${(props) => props.opacity};
   border-radius: 4.63636px;
 `;
 const RegisterDiv = styled.div`

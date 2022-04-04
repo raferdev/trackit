@@ -1,16 +1,34 @@
-import Header from "../Header";
 import styled from "styled-components";
 import Create from "./Create";
-import Footer from "../Footer";
 import trashImg from "../../../assets/img/trash.jpg";
 import { useContext, useState, useEffect } from "react";
 import { LoginContext } from "../../../assets/context/LoginContext.js";
+import {PercentageContext} from "../../../assets/context/PercentageContext.js"
 import axios from "axios";
 export default function Habitos() {
+  const {setPercentage} = useContext(PercentageContext);
   const { userData } = useContext(LoginContext);
   const [reload, setReload] = useState(0);
   const [create, setCreate] = useState(false);
+  const [showCreate,setShowCreate] = useState(false);
   const [habits, setHabits] = useState([]);
+  useEffect(() => {
+    const TODAY_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`;
+    const token = userData.token
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const promise = axios.get(TODAY_API, config);
+    promise.then((response) => {
+      const done = response.data.filter(habit=>habit.done?true:false)
+      const all = response.data
+      const percent = (done.length*100)/all.length
+      setPercentage(percent);
+    });
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     const token = userData.token;
     const RELOAD_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`;
@@ -36,22 +54,17 @@ export default function Habitos() {
   }
   return (
     <>
-      <Header />
       <Main>
         <Section>
           <H2>Meus hábitos</H2>
-          <Button onClick={() => setCreate(true)}></Button>
+          <Button onClick={() => {setCreate(true);setShowCreate(true)}}></Button>
         </Section>
         <TransitionDiv
-          opacity={create ? 1 : 0}
-          width={create ? "340px" : 0}
-          height={create ? "200px" : 0}
+          opacity={showCreate ? 1 : 0}
+          width={showCreate ? "340px" : 0}
+          height={showCreate ? "200px" : 0}
         >
-          {create ? (
-            <Create setCreate={setCreate} setReload={setReload} />
-          ) : (
-            <></>
-          )}
+          {create?<Create setShowCreate={setShowCreate} setCreate={setCreate} setReload={setReload} create={create}/>:<></>}
         </TransitionDiv>
         <Article>
           {habits.length > 0 ? (
@@ -119,17 +132,15 @@ export default function Habitos() {
           )}
         </Article>
       </Main>
-      <Footer />
     </>
   );
 }
 const Main = styled.main`
-margin: 70px 18px 70px 18px;
+  padding: 70px 18px 70px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-shrink: 0;
-  width: 500px;;
+  width: 100%;
   min-height: 100%;
 `;
 const Section = styled.section`

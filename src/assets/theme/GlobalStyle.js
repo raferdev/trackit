@@ -11,12 +11,7 @@ const GlobalStyle = createGlobalStyle`
   html,body,.root {
    min-height:100%;
    min-width:100%;
-  }
-  .root {
-	display: flex;
-    flex-direction: column;
-    align-items: center;
-	background: #e5e5e5;
+   background: #e5e5e5;
   }
   *{
     box-sizing:border-box;

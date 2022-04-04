@@ -24,10 +24,13 @@ export default function Register() {
     };
 
     const promise = axios.post(REGISTER_API, dados);
-    promise.then((response) => {
+    promise.then(() => {
       navigate("/login")
     });
-    promise.catch((response) => console.log(response));
+    promise.catch((response) => {
+      alert("deu ruim tenta dnv");
+      setSubmit(false);
+      console.log(response)});
   }
   return (
     <Main>
@@ -84,10 +87,13 @@ export default function Register() {
 const Main = styled.main`
   height: 100%;
   width: 100%;
+  position:absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background: #e5e5e5;
+  z-index:1;
 `;
 const Img = styled.img`
   width: 180px;

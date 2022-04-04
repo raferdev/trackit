@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { PercentageContext } from "../../../assets/context/PercentageContext";
+import { useContext } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
-export default function Footer({ percentage }) {
+export default function Footer() {
+  const {percentage} = useContext(PercentageContext)
   const navigate = useNavigate();
   function goTo(to) {
     navigate(to);
   }
   return (
-    <FooterStyle>
+      <FooterStyle>
       <H3 onClick={() => goTo("/habitos")}>Hábitos</H3>
       <Hoje onClick={() => goTo("/hoje")}>
         <CircularProgressbar
@@ -24,9 +27,9 @@ export default function Footer({ percentage }) {
           })}
         />
       </Hoje>
-      <H3 onClick={() => goTo("/hoje")}>Histórico</H3>
+      <H3 onClick={() => goTo("/historico")}>Histórico</H3>
     </FooterStyle>
-  );
+    )
 }
 const FooterStyle = styled.footer`
   height: 70px;

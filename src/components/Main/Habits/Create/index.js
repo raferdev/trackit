@@ -5,7 +5,7 @@ import { LoginContext } from "../../../../assets/context/LoginContext";
 import Selectors from "./selectors";
 import { ThreeDots } from "react-loader-spinner";
 export default function Create(props) {
-  const { setCreate, setReload } = props;
+  const { setCreate, setReload, setShowCreate } = props;
   const { userData } = useContext(LoginContext);
   const [days, setDays] = useState([]);
   const [habit, setHabit] = useState("");
@@ -27,53 +27,55 @@ export default function Create(props) {
     const promise = axios.post(CREATE_API, body, config);
     promise.then(() => {
       setReload(habit);
+      setShowCreate(false);
+      setSubmit(false);
       setCreate(false);
     });
   }
   return (
     <SectionCreate>
-        <form onSubmit={Post}>
-          <Input
-            placeholder="nome do hábito"
-            value={habit}
-            onChange={(e) => setHabit(e.target.value)}
+      <form onSubmit={Post}>
+        <Input
+          placeholder="nome do hábito"
+          value={habit}
+          onChange={(e) => setHabit(e.target.value)}
+          disabled={submit ? true : false}
+        ></Input>
+        <ButtonsWeek>
+          {daysSelectors.map((name, index) => {
+            return (
+              <Selectors
+                id={index}
+                name={name}
+                key={index}
+                submit={submit}
+                setDays={setDays}
+              />
+            );
+          })}
+        </ButtonsWeek>
+        <NavButtons>
+          <ButtonQuit
+            type="button"
+            opacity={submit ? 0.7 : 1}
+            onClick={() => setShowCreate(false)}
             disabled={submit ? true : false}
-          ></Input>
-          <ButtonsWeek>
-            {daysSelectors.map((name, index) => {
-              return (
-                <Selectors
-                  id={index}
-                  name={name}
-                  key={index}
-                  submit={submit}
-                  setDays={setDays}
-                />
-              );
-            })}
-          </ButtonsWeek>
-          <NavButtons>
-            <ButtonQuit
-              type="button"
-              opacity={submit ? 0.7 : 1}
-              onClick={() => setCreate(false)}
-              disabled={submit ? true : false}
-            >
-              Cancelar
-            </ButtonQuit>
-            <ButtonSave
-              type="submit"
-              opacity={submit ? 0.7 : 1}
-              disabled={submit ? true : false}
-            >
-              {submit ? (
-                <ThreeDots color="#FFFFFF" height={30} width={30} />
-              ) : (
-                "Salvar"
-              )}
-            </ButtonSave>
-          </NavButtons>
-        </form>
+          >
+            Cancelar
+          </ButtonQuit>
+          <ButtonSave
+            type="submit"
+            opacity={submit ? 0.7 : 1}
+            disabled={submit ? true : false}
+          >
+            {submit ? (
+              <ThreeDots color="#FFFFFF" height={30} width={30} />
+            ) : (
+              "Salvar"
+            )}
+          </ButtonSave>
+        </NavButtons>
+      </form>
     </SectionCreate>
   );
 }
@@ -87,7 +89,7 @@ const SectionCreate = styled.div`
   border-radius: 5px;
   padding: 16px;
   margin-bottom: 30px;
-  flex-shrink:0;
+  flex-shrink: 0;
 `;
 const Input = styled.input`
   width: 303px;

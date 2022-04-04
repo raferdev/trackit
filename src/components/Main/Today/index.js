@@ -1,13 +1,13 @@
-import Header from "../Header";
-import Footer from "../Footer";
 import styled from "styled-components";
 import axios from "axios";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import { LoginContext } from "../../../assets/context/LoginContext.js";
+import { PercentageContext } from "../../../assets/context/PercentageContext.js";
 import { useEffect, useState, useContext } from "react";
 import TodayHabits from "./TodayHabits";
 export default function Hoje() {
+  const {setPercentage} = useContext(PercentageContext)
   const { userData } = useContext(LoginContext);
   const [refresh, setRefresh] = useState("");
   const [todayHabits, setTodayHabits] = useState([]);
@@ -28,6 +28,10 @@ export default function Hoje() {
     });
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
+  useEffect(()=> {
+    setPercentage(percentage)
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  },[percentage])
   function CheckUncheck(id, done) {
     id = id.toString();
     const CHECK_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`;
@@ -54,13 +58,12 @@ export default function Hoje() {
   }
   return (
     <>
-      <Header />
       <Main>
         <HeaderDiv>
           <DayDiv>
             {dayjs().locale("pt-br").format("dddd, DD/MM")}
           </DayDiv>
-          <PercentageDiv color={doneArr.length > 0 ? "#8FC549" : "#bababa"}>{doneArr.length>0?`${(doneArr.length*100)/todayHabits.length}% dos hábitos concluídos`:"Nenhum hábito concluído ainda"}</PercentageDiv>
+          <PercentageDiv color={doneArr.length > 0 ? "#8FC549" : "#bababa"}>{doneArr.length>0?`${percentage}% dos hábitos concluídos`:"Nenhum hábito concluído ainda"}</PercentageDiv>
         </HeaderDiv>
         {todayHabits.map((habit, index) => (
           <TodayHabits
@@ -70,7 +73,6 @@ export default function Hoje() {
           />
         ))}
       </Main>
-      <Footer percentage={percentage}/>
     </>
   );
 }
