@@ -1,7 +1,25 @@
 {
-  "name": "projeto10-trackit",
-  "version": "0.1.0",
+  "name": "trackit",
+  "version": "1.1.0",
   "private": true,
+  "description": "App to track your activities and improve your organization.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raferdev/trackit.git"
+  },
+  "keywords": [
+    "ReactJS",
+    "Html",
+    "CSS",
+    "Tracking",
+    "Frontend",
+    "Activities"
+  ],
+  "author": "raferdev@outlook.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raferdev/trackit/issues"
+  },
   "dependencies": {
     "axios": "^0.26.1",
     "dayjs": "^1.11.0",

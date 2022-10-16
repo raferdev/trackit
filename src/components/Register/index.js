@@ -30,10 +30,26 @@ export default function Register() {
     promise.then(() => {
       navigate("/login");
     });
-    promise.catch((response) => {
-      alert("deu ruim tenta dnv");
-      setSubmit(false);
-      console.log(response);
+    promise.catch((data) => {
+     const error = data.response.data
+      if(error.message==="Usuário já cadastrado!") {
+        console.warn("Duplicate email")
+        alert("This email is already being used.")
+        setSubmit(false);
+        window.location.reload();
+        return 
+      }
+      if(error.details[0]==="\"image\" must be a valid uri") {
+        console.warn("Image error")
+        alert("Image URL must be valid uri.")
+        setSubmit(false);
+        window.location.reload();
+        return 
+      }
+        alert(`${error.message}`);
+        setSubmit(false);
+        window.location.reload();
+        return 
     });
   }
   return (

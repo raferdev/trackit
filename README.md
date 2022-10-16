@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+<p align="center">
+  <a href="https://cineflix-rose.vercel.app/">
+ <img width=200px height=200px src="./readme.png" alt="Project logo"></a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h3 align="center">Zaprecall</h3>
 
-## Available Scripts
+<div align="center">
 
-In the project directory, you can run:
+[![Status](https://img.shields.io/badge/status-closed-red.svg)]()
+[![GitHub Issues](https://img.shields.io/github/issues/raferdev/cineflix.svg)](https://github.com//raferdev/cineflix/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/raferdev/cineflix.svg)](https://github.com/raferdev/cineflix/pulls)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-### `npm start`
+</div>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<img src="./readme-banner.png">
 
-### `npm test`
+---
+<p align="center"> This project is 
+</p>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📝 Table of Contents
 
-### `npm run build`
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Usage](#usage)
+- [Built Using](#built_using)
+- [Authors](#authors)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🧐 About <a name = "about"></a>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This project is based on sites of reserving seats at movie sessions. Is build in ReactJS and use one API to check and reserve seats, you can see all movies and click on them to select the best day and hour to reserve your seats.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🏁 Getting Started <a name = "getting_started"></a>
 
-### `npm run eject`
+You can clone the project and start on your local host or open the site hospeded <a href="https://cineflix-rose.vercel.app/">here</a>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Clone
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ ```
+ git clone https://github.com/raferdev/cineflix
+ ```
+Install Dependencies
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+npm i
+```
+Start Server
+```
+npm start
+```
+The browser will remote open on the local link on port 3000 (usually). Exemple .:
+```
+http://localhost:3000
+```
 
-## Learn More
+## 🎈 Usage <a name="usage"></a>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- The API will return all of open movies.
+- You can select which you prefeer.
+- You will see all the dates to reserve.
+- Select the best date.
+- You will see the seats, the open seats will apear in blue, and you can select them to reserve.
+- Complete the form to finish your reservation.
+- Good session.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## ⛏️ Built Using <a name = "built_using"></a>
 
-### Code Splitting
+- [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML) - Markup Language
+- [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS) - Style Language
+- [JS](https://developer.mozilla.org/pt-BR/docs/Web/javascript) - Interative Language
+- [ReactJS](https://pt-br.reactjs.org/) - Javascript Super Library
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## ✍️ Authors <a name = "authors"></a>
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [@raferdev](https://github.com/raferdev)
