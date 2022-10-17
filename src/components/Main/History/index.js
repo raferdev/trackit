@@ -7,7 +7,7 @@ import "react-calendar/dist/Calendar.css";
 export default function History() {
   const { userData } = useContext(LoginContext);
   const [calendarVal, setCalendarVal] = useState(new Date());
-  const [ setData] = useState([])
+  const [ data ,setData] = useState([])
   useEffect(() => {
     const HISTORY_API = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily`;
     const token = userData.token;
@@ -24,7 +24,6 @@ export default function History() {
   }, []);
   return (
     <Main>
-      <H1>O seu histórico irá aparecer na proxima atualização do App. :P</H1>
         <div className="Sample__container__content">
           <Calendar
             onChange={setCalendarVal}
